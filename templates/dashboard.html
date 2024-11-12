@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="my-4 text-center">Dashboard de Análisis</h2>
+
+    <!-- Cuadros de Resultados Principales -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-center bg-primary text-white">
+                <h5>Total de Denuncias</h5>
+                <p class="display-4">{{ total_denuncias }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center bg-success text-white">
+                <h5>Casos Activos</h5>
+                <p class="display-4">{{ casos_activos }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center bg-warning text-white">
+                <h5>Usuarios Registrados</h5>
+                <p class="display-4">{{ total_usuarios }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos de Análisis -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h5 class="text-center">Denuncias Mensuales</h5>
+            <canvas id="monthlyChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h5 class="text-center">Distribución por Tipo de Violencia</h5>
+            <canvas id="typeChart"></canvas>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h5 class="text-center">Estado de los Casos</h5>
+            <canvas id="statusChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <h5 class="text-center">Tendencia de Denuncias Mensuales</h5>
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Datos para gráficos -->
+    <script id="labelsMeses" type="application/json">{{ labels_meses | tojson }}</script>
+    <script id="datosMensuales" type="application/json">{{ datos_mensuales | tojson }}</script>
+    <script id="datosTipos" type="application/json">{{ datos_tipos | tojson }}</script>
+    <script id="datosEstados" type="application/json">{{ datos_estados | tojson }}</script>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% endblock %}

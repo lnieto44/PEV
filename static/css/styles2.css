@@ -1,0 +1,29 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.navbar {
+    background-color: #ff8c00;
+}
+
+.navbar a {
+    color: #fff;
+    font-weight: bold;
+}
+
+.header, .footer {
+    background-color: #ffb84d;
+    color: white;
+    padding: 20px;
+}
+
+.section {
+    padding: 30px 0;
+}
+
+.carousel img {
+    width: 100%;
+    height: auto;
+}

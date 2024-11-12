@@ -1,0 +1,59 @@
+{% extends "home.html" %}
+{% block content %}
+<section class="section container text-center mt-5">
+    <h2>Centros de Ayuda Disponibles</h2>
+    <p>Consulta los centros de ayuda disponibles en tu área y obtén el apoyo necesario.</p>
+
+    <!-- Mapa interactivo -->
+    <div class="row mt-4">
+        <div class="col-md-8 offset-md-2">
+            <div id="map" style="width: 100%; height: 400px;"></div>
+        </div>
+    </div>
+
+    <!-- Lista de centros de ayuda -->
+    <div class="row mt-5">
+        <div class="col-md-8 offset-md-2">
+            <ul class="list-group" id="centros-lista"></ul>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Función para inicializar el mapa
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 4.6, lng: -74.08 }, // Coordenadas de ejemplo para centrar el mapa
+            zoom: 12,
+        });
+
+        // Solicitar los centros de ayuda al servidor
+        fetch('/api/centros_ayuda')
+            .then(response => response.json())
+            .then(data => {
+                const centrosLista = document.getElementById('centros-lista');
+
+                data.forEach(centro => {
+                    // Crear un marcador para cada centro en el mapa
+                    new google.maps.Marker({
+                        position: { lat: parseFloat(centro.latitude), lng: parseFloat(centro.longitude) },
+                        map: map,
+                        title: centro.name,
+                    });
+
+                    // Agregar el centro a la lista de la página
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    listItem.innerHTML = `<i class="fas fa-map-marker-alt text-warning"></i> <strong>${centro.name}</strong> - ${centro.address}`;
+                    centrosLista.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error al cargar los centros de ayuda:', error));
+    }
+</script>
+
+<!-- API de Google Maps con función de inicialización de mapa -->
+<script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+{% endblock %}
+
+

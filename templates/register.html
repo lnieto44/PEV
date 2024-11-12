@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="text-center">
+                <img src="{{ url_for('static', filename='img/pev_logo.png') }}" alt="PEV Logo" width="120">
+                <h3 class="mt-3">Registrar Usuario</h3>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} mt-2">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form method="POST" action="{{ url_for('register') }}" class="mt-4">
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Usuario:</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Ingresa tu usuario" required>
+                </div>
+                
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Contraseña:</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+                </div>
+                
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+                </div>
+                
+                <!-- Role 
+                <div class="form-group">
+                    <label for="role"><i class="fas fa-user-tag"></i> Rol:</label>
+                    <select class="form-control" id="role" name="role">
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
+                </div>-->
+                
+                <!-- Tipo Documento -->
+                <div class="form-group">
+                    <label for="tipo_documento"><i class="fas fa-id-card"></i> Tipo de Documento:</label>
+                    <input type="text" class="form-control" id="tipo_documento" name="tipo_documento" placeholder="Tipo de documento (opcional)">
+                </div>
+                
+                <!-- Cedula -->
+                <div class="form-group">
+                    <label for="cedula"><i class="fas fa-id-badge"></i> Cédula:</label>
+                    <input type="number" class="form-control" id="cedula" name="cedula" placeholder="Número de cédula (opcional)">
+                </div>
+                
+                <!-- Primer Nombre -->
+                <div class="form-group">
+                    <label for="primer_nombre"><i class="fas fa-user-circle"></i> Primer Nombre:</label>
+                    <input type="text" class="form-control" id="primer_nombre" name="primer_nombre" placeholder="Ingresa tu primer nombre (opcional)">
+                </div>
+                
+                <!-- Segundo Nombre -->
+                <div class="form-group">
+                    <label for="segundo_nombre"><i class="fas fa-user-circle"></i> Segundo Nombre:</label>
+                    <input type="text" class="form-control" id="segundo_nombre" name="segundo_nombre" placeholder="Ingresa tu segundo nombre (opcional)">
+                </div>
+                
+                <!-- Primer Apellido -->
+                <div class="form-group">
+                    <label for="primer_apellido"><i class="fas fa-user-circle"></i> Primer Apellido:</label>
+                    <input type="text" class="form-control" id="primer_apellido" name="primer_apellido" placeholder="Ingresa tu primer apellido (opcional)">
+                </div>
+                
+                <!-- Segundo Apellido -->
+                <div class="form-group">
+                    <label for="segundo_apellido"><i class="fas fa-user-circle"></i> Segundo Apellido:</label>
+                    <input type="text" class="form-control" id="segundo_apellido" name="segundo_apellido" placeholder="Ingresa tu segundo apellido (opcional)">
+                </div>
+                
+                <!-- Edad -->
+                <div class="form-group">
+                    <label for="edad"><i class="fas fa-birthday-cake"></i> Edad:</label>
+                    <input type="number" class="form-control" id="edad" name="edad" placeholder="Ingresa tu edad (opcional)">
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-block mt-4">Registrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

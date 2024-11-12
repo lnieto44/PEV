@@ -1,0 +1,22 @@
+{% extends "home.html" %}
+{% block content %}
+<section class="section container text-center mt-5">
+    <h2>Contacto</h2>
+    <p>Si necesitas ayuda o tienes alguna pregunta, contáctanos a través del siguiente formulario.</p>
+    <form method="POST" action="{{ url_for('contacto') }}" class="mt-4">
+        <div class="mb-3">
+            <label for="nombre" class="form-label"><i class="fas fa-user"></i> Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ingresa tu nombre" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label"><i class="fas fa-envelope"></i> Correo Electrónico</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Ingresa tu correo electrónico" required>
+        </div>
+        <div class="mb-3">
+            <label for="mensaje" class="form-label"><i class="fas fa-comment-dots"></i> Mensaje</label>
+            <textarea id="mensaje" name="mensaje" class="form-control" rows="5" placeholder="Escribe tu mensaje aquí" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-warning"><i class="fas fa-paper-plane"></i> Enviar</button>
+    </form>
+</section>
+{% endblock %}

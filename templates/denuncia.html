@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h3>Formulario de Denuncia</h3>
+    <form method="POST" action="{{ url_for('submit_denuncia') }}">
+        <!-- Descripción del incidente -->
+        <div class="form-group">
+            <label for="description">Descripción del incidente:</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+        </div>
+
+        <!-- Tipo de Incidente -->
+        <div class="form-group">
+            <label for="incident_type">Tipo de Incidente:</label>
+            <select class="form-control" id="incident_type" name="incident_type" required>
+                <option value="Robo">Robo</option>
+                <option value="Asalto">Asalto</option>
+                <option value="Acoso">Acoso</option>
+                <option value="Otro">Otro</option>
+            </select>
+        </div>
+
+        <!-- Ubicación del incidente -->
+        <div class="form-group">
+            <label for="location">Ubicación del incidente:</label>
+            <input type="text" class="form-control" id="location" name="location" placeholder="Dirección o lugar específico" required>
+        </div>
+
+        <!-- Nombre del denunciante (opcional) -->
+        <div class="form-group">
+            <label for="nombre">Nombre del denunciante (opcional):</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Tu nombre">
+        </div>
+
+        <!-- Teléfono de contacto (opcional) -->
+        <div class="form-group">
+            <label for="telefono">Teléfono de contacto (opcional):</label>
+            <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Número de teléfono">
+        </div>
+
+        <!-- Correo electrónico (opcional) -->
+        <div class="form-group">
+            <label for="email">Correo electrónico (opcional):</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico">
+        </div>
+
+        <!-- Botón de envío -->
+        <button type="submit" class="btn btn-primary">Enviar Denuncia</button>
+    </form>
+</div>
+{% endblock %}
+
