@@ -1,29 +1,231 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     color: #333;
+    line-height: 1.6;
 }
 
+/* Header */
+header {
+    background: linear-gradient(135deg, #ff6b6b, #ff8a5c);
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Navegación */
 .navbar {
-    background-color: #ff8c00;
+    background-color: #ff6b6b;
 }
 
-.navbar a {
+.navbar .navbar-brand {
     color: #fff;
+    font-size: 1.3em;
     font-weight: bold;
 }
 
-.header, .footer {
-    background-color: #ffb84d;
-    color: white;
-    padding: 20px;
+.navbar .navbar-nav .nav-link {
+    color: #ffffff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 10px 15px;
 }
 
-.section {
-    padding: 30px 0;
+.navbar .navbar-nav .nav-link:hover {
+    background-color: #ffd700;
+    color: #333;
 }
 
-.carousel img {
-    width: 100%;
+/* Carrusel */
+.carousel-item img {
+    object-fit: cover;
+    height: 500px;
+}
+
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+/* Sección de Servicios */
+.services-section {
+    padding: 60px 20px;
+    background-color: #fffaf1;
+    text-align: center;
+}
+
+.services-section h2 {
+    font-size: 2.8em;
+    color: #cc5500;
+    margin-bottom: 40px;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.service-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.service-card h4 {
+    color: #ff7f50;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.service-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Sección Quiénes Somos */
+.about-section {
+    padding: 60px 20px;
+    background-color: #fef7e1;
+    text-align: center;
+}
+
+.about-section h2 {
+    font-size: 2.4em;
+    color: #cc5500;
+    margin-bottom: 30px;
+    font-weight: bold;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.about-item {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+}
+
+.about-item img {
+    width: 200px;
     height: auto;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Sección de Contacto */
+.contact-section {
+    padding: 40px;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.contact-section h2 {
+    font-size: 2em;
+    color: #cc5500;
+    margin-bottom: 20px;
+}
+
+.contact-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.contact-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    margin-top: 10px;
+    color: #cc5500;
+}
+
+.contact-form input, .contact-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.contact-form button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ff7f50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #ff6347;
+}
+
+/* Footer */
+footer {
+    background-color: #ff7f50;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9em;
+    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Ajusta el ancho y alto del carrusel en porcentajes */
+.carousel-inner img {
+    width: 100%;         /* Ocupa el 100% del ancho del contenedor */
+    height: 70vh;        /* Ocupa el 70% de la altura de la ventana (viewport) */
+    object-fit: cover;   /* Ajusta la imagen para que cubra el espacio sin deformarse */
+}
+
+/* Opcional: Ajuste para pantallas pequeñas */
+@media (max-width: 768px) {
+    .carousel-inner img {
+        height: 50vh;    /* En dispositivos móviles, el alto será del 50% de la ventana */
+    }
 }

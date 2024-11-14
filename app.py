@@ -331,6 +331,15 @@ def api_centros_ayuda():
     return jsonify(centros_data)
 
 
+@app.route('/caracteristicas')
+def caracteristicas():
+    return render_template('Usuarios/sobre-mi.html')  # Página de características
+
+@app.route('/servicios')
+def servicios():
+    return render_template('Usuarios/servicios.html')  # Página de servicios
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # Crear tablas si no existen en la base de datos

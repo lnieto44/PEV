@@ -1,0 +1,25 @@
+{% extends "Usuarios/home.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>¿Qué Sucede?</h2>
+    <p>La violencia de género en Colombia continúa siendo un problema grave, afectando a mujeres, hombres y niños...</p>
+    
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <img src="{{ url_for('static', filename='img/m3.jpg') }}" alt="¿Por Qué Sucede?" class="img-fluid rounded mb-3">
+            <h3>¿Por Qué Sucede?</h3>
+            <p>A pesar de la existencia de leyes en Colombia, la implementación efectiva se ve obstaculizada...</p>
+        </div>
+        <div class="col-md-4">
+            <img src="{{ url_for('static', filename='img/m4.jpg') }}" alt="¿A Quiénes Afecta?" class="img-fluid rounded mb-3">
+            <h3>¿A Quiénes Afecta?</h3>
+            <p>La violencia de género afecta a mujeres, hombres y niños...</p>
+        </div>
+        <div class="col-md-4">
+            <img src="{{ url_for('static', filename='img/m5.jpg') }}" alt="¿De Qué Manera?" class="img-fluid rounded mb-3">
+            <h3>¿De Qué Manera?</h3>
+            <p>La falta de herramientas tecnológicas limita la capacidad de gestionar y analizar los casos...</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
