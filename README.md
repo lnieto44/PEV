@@ -6,4 +6,5 @@ Plataforma de Prevención y Erradicación de la Violencia
 pip install flask flask-sqlalchemy flask-login werkzeug
 
 #ejecutar la app
+
 python app.py
