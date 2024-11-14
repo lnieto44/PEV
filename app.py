@@ -207,7 +207,7 @@ def submit_denuncia():
 # Módulo de geolocalización
 
 # Ruta para "centros_ayuda" (ubicada en Usuarios/centros_ayuda.html)
-@app.route('/')
+@app.route('/centros_ayuda')
 def centros_ayuda():
     return render_template('Usuarios/centros_ayuda.html')
 
