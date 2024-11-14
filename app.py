@@ -55,7 +55,7 @@ def login():
         else:
             flash('Credenciales incorrectas', 'danger')
     
-    return render_template('login.html')
+    return render_template('Usuarios/login.html')
 
 # Ruta para cerrar sesión
 @app.route('/logout')
@@ -107,7 +107,7 @@ def register():
             flash(f'Error al registrar el usuario: {e}', 'danger')
             return redirect(url_for('register'))
 
-    return render_template('register.html')
+    return render_template('Usuarios/register.html')
 
 
 # Vista de dashboard para administradores
@@ -169,10 +169,10 @@ def admin_dashboard():
 
 # Página de usuario
 
-# Ruta para mostrar el formulario de denuncia
+# Ruta para mostrar el formulario de denuncia 
 @app.route('/denuncia', methods=['GET'])
 def denuncia_form():
-    return render_template('denuncia.html')
+    return render_template('Usuarios/denuncia.html')
 
 # Ruta para procesar el formulario de denuncia
 @app.route('/submit_denuncia', methods=['POST'])
@@ -205,9 +205,17 @@ def submit_denuncia():
     return redirect(url_for('denuncia_form'))
 
 # Módulo de geolocalización
+
+# Ruta para "centros_ayuda" (ubicada en Usuarios/centros_ayuda.html)
 @app.route('/')
 def centros_ayuda():
-    return render_template('centros_ayuda.html')
+    return render_template('Usuarios/centros_ayuda.html')
+
+# Ruta para "centro_ayuda" (ubicada en Administrador/centro_ayuda.html)
+@app.route('/centro_ayuda')
+def centro_ayuda():
+    return render_template('Administrador/centro_ayuda.html')
+
 
 @app.route('/get_help_centers', methods=['GET'])
 def get_help_centers():
@@ -273,7 +281,7 @@ def manage_roles():
         else:
             flash('Usuario no encontrado.')
     users = User.query.all()
-    return render_template('administrar_roles.html', users=users)
+    return render_template('Administrador/administrar_roles.html', users=users)
 
 #log llevar la traza de los registros de los eventos de la platafoma
 def log_action(user_id, action, details=None):
@@ -290,11 +298,11 @@ def log_action(user_id, action, details=None):
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('Usuarios/home.html')
 
 @app.route('/quienes_somos')
 def quienes_somos():
-    return render_template('quienes_somos.html')
+    return render_template('Usuarios/quienes_somos.html')
 
 @app.route('/contacto', methods=['GET', 'POST'])
 def contacto():
@@ -306,7 +314,7 @@ def contacto():
         # Aquí puedes manejar el mensaje, como almacenarlo en una base de datos o enviarlo por correo
         flash("Tu mensaje ha sido enviado. Nos pondremos en contacto contigo pronto.", "success")
         return redirect(url_for('contacto'))
-    return render_template('contacto.html')
+    return render_template('Usuarios/contacto.html')
 
 @app.route('/api/centros_ayuda')
 def api_centros_ayuda():
@@ -322,14 +330,10 @@ def api_centros_ayuda():
     ]
     return jsonify(centros_data)
 
-@app.route('/centro_ayuda')
-def centro_ayuda():
-    return render_template('centro_ayuda.html')
-
-
 
 if __name__ == '__main__':
-    db.create_all()
+    with app.app_context():
+        db.create_all()  # Crear tablas si no existen en la base de datos
     app.run(debug=True)
 
 
