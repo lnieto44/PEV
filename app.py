@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.db'
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -72,11 +72,10 @@ def logout():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Retrieve form data
+        # Obtener datos del formulario
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-        #role = request.form['role']
         tipo_documento = request.form.get('tipo_documento')
         cedula = request.form.get('cedula')
         primer_nombre = request.form.get('primer_nombre')
@@ -85,17 +84,20 @@ def register():
         segundo_apellido = request.form.get('segundo_apellido')
         edad = request.form.get('edad')
 
-        # Hash the password for security
+        # Encriptar la contraseña para seguridad
         hashed_password = generate_password_hash(password)
 
-        # Insert into the database
+        # Definir el role_id para el usuario (ejemplo: 2 para usuarios regulares)
+        role_id = 2  # Suponiendo que 2 es el ID para el rol 'user' en la tabla roles
+
+        # Insertar el nuevo usuario en la base de datos
         try:
             conn = sqlite3.connect('user.db')
             cursor = conn.cursor()
             cursor.execute("""
-                INSERT INTO usuarios (username, password, email, tipo_documento, cedula, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, edad)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (username, hashed_password, email, tipo_documento, cedula, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, edad))
+                INSERT INTO usuarios (username, password, email, tipo_documento, cedula, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, edad, role_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (username, hashed_password, email, tipo_documento, cedula, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, edad, role_id))
             conn.commit()
             conn.close()
 
@@ -106,6 +108,7 @@ def register():
             return redirect(url_for('register'))
 
     return render_template('register.html')
+
 
 # Vista de dashboard para administradores
 @app.route('/dashboard')
@@ -165,13 +168,6 @@ def admin_dashboard():
 
 
 # Página de usuario
-@app.route('/user_page')
-@login_required
-def user_page():
-    if current_user.role == 'admin':
-        return redirect(url_for('admin_dashboard'))
-    return render_template('user_page.html')
-
 
 # Ruta para mostrar el formulario de denuncia
 @app.route('/denuncia', methods=['GET'])
@@ -210,7 +206,7 @@ def submit_denuncia():
 
 # Módulo de geolocalización
 @app.route('/')
-def home():
+def centros_ayuda():
     return render_template('centros_ayuda.html')
 
 @app.route('/get_help_centers', methods=['GET'])
@@ -277,7 +273,7 @@ def manage_roles():
         else:
             flash('Usuario no encontrado.')
     users = User.query.all()
-    return render_template('administrador_roles.html', users=users)
+    return render_template('administrar_roles.html', users=users)
 
 #log llevar la traza de los registros de los eventos de la platafoma
 def log_action(user_id, action, details=None):

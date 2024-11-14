@@ -64,3 +64,40 @@ if ('serviceWorker' in navigator && 'SyncManager' in window) {
     });
 }
 
+//// Función para inicializar el mapa de centro_ayuda
+function initMap() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 4.6, lng: -74.08 }, // Coordenadas iniciales
+        zoom: 12,
+    });
+
+    // Llamada para cargar los centros de ayuda
+    fetchCentrosAyuda(map);
+}
+
+function fetchCentrosAyuda(map) {
+    // Solicitar los centros de ayuda al servidor
+    fetch('/api/centros_ayuda')
+        .then(response => response.json())
+        .then(data => {
+            const centrosLista = document.getElementById('centros-lista');
+
+            data.forEach(centro => {
+                // Crear un marcador para cada centro en el mapa
+                new google.maps.Marker({
+                    position: { lat: parseFloat(centro.latitude), lng: parseFloat(centro.longitude) },
+                    map: map,
+                    title: centro.name,
+                });
+
+                // Agregar el centro a la lista de la página
+                const listItem = document.createElement('li');
+                listItem.className = 'list-group-item';
+                listItem.innerHTML = `<i class="fas fa-map-marker-alt text-warning"></i> <strong>${centro.name}</strong> - ${centro.address}`;
+                centrosLista.appendChild(listItem);
+            });
+        })
+        .catch(error => console.error('Error al cargar los centros de ayuda:', error));
+}
+
+

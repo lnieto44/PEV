@@ -7,11 +7,7 @@ CREATE TABLE IF NOT EXISTS roles (
 -- Insertar roles iniciales (admin y user)
 INSERT INTO roles (role_name) VALUES ('admin'), ('user');
 
--- Insertar roles en la tabla roles
-INSERT INTO roles (role_name) VALUES ('admin');
-INSERT INTO roles (role_name) VALUES ('user');
-
--- Crear tabla de usuarios
+-- Crear tabla de usuarios con role_id como clave foránea
 CREATE TABLE IF NOT EXISTS usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
@@ -42,7 +38,6 @@ INSERT INTO usuarios (username, password, email, tipo_documento, cedula, primer_
 ('user7', 'hashed_password9', 'user7@example.com', 'TI', 66778899, 'Camila', 'Andrea', 'Morales', '', 27, 2),
 ('user8', 'hashed_password10', 'user8@example.com', 'CE', 11224455, 'Miguel', 'Ángel', 'Ruiz', '', 29, 2);
 
-
 -- Crear tabla de centros de ayuda
 CREATE TABLE IF NOT EXISTS centros_ayuda (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -65,7 +60,6 @@ INSERT INTO centros_ayuda (name, address, latitude, longitude) VALUES
 ('Punto de Asistencia Norte', 'Calle 100 #15-10', 4.692300, -74.054500),
 ('Centro de Apoyo Psicológico', 'Carrera 10 #70-20', 4.657000, -74.059000);
 
-
 -- Crear tabla de denuncias
 CREATE TABLE IF NOT EXISTS denuncias (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,20 +73,6 @@ CREATE TABLE IF NOT EXISTS denuncias (
     FOREIGN KEY (center_id) REFERENCES centros_ayuda(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
--- Insertar denuncias en la tabla denuncias
-INSERT INTO denuncias (description, incident_type, location, user_id, center_id) VALUES
-('Robo de celular en la vía pública', 'Robo', 'Avenida 5 con Calle 10', 3, 1),
-('Asalto a mano armada', 'Asalto', 'Calle 15 con Carrera 8', 4, 2),
-('Acoso en el transporte público', 'Acoso', 'Estación Central', 5, NULL),
-('Robo de bicicleta', 'Robo', 'Parque de la 93', 6, 3),
-('Violencia verbal en el parque', 'Acoso', 'Parque Simón Bolívar', 7, 2),
-('Hurto de pertenencias personales', 'Robo', 'Calle 50 con Carrera 13', 8, 1),
-('Acoso laboral en la oficina', 'Acoso', 'Empresa XYZ', 9, NULL),
-('Intento de robo en el centro comercial', 'Robo', 'Centro Comercial Andino', 10, 4),
-('Asalto en el barrio', 'Asalto', 'Barrio La Castellana', 3, 3),
-('Acoso en redes sociales', 'Acoso', 'Facebook', 4, NULL);
-
-
 -- Crear tabla de registros de actividad (logs)
 CREATE TABLE IF NOT EXISTS logs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -102,6 +82,7 @@ CREATE TABLE IF NOT EXISTS logs (
     details TEXT,
     FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 -- Obtener todos los logs
 SELECT * FROM logs ORDER BY timestamp DESC;

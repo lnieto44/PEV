@@ -55,8 +55,8 @@
                                     <form method="POST" action="{{ url_for('manage_roles') }}" class="d-flex align-items-center">
                                         <input type="hidden" name="user_id" value="{{ user.id }}">
                                         <select name="role" class="form-select form-select-sm me-2" required>
-                                            <option value="user" {% if user.role = 'user' %}selected{% endif %}>User</option>
-                                            <option value="admin" {% if user.role = 'admin' %}selected{% endif %}>Admin</option>
+                                            <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
+                                            <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
                                         </select>
                                         <button type="submit" class="btn btn-primary btn-sm">
                                             <i class="fas fa-sync-alt"></i> Actualizar
