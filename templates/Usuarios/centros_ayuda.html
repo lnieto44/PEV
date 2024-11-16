@@ -1,15 +1,17 @@
-{% extends "Usuarios/home.html" %}
+{% extends "Usuarios/principal.html" %}
 {% block content %}
 <div class="container">
     <h3>Centros de Ayuda Cercanos</h3>
-    <p>Use la geolocalización para encontrar centros de asistencia cercanos.</p>
-    <button class="btn btn-primary" id="find_location">Buscar Centros</button>
-    <div id="map" style="height: 400px; margin-top: 20px;"></div>
+    <p>Encuentra tu ubicación y los centros de ayuda disponibles en el mapa:</p>
+    <div id="map" style="height: 500px; margin-top: 20px;"></div>
 </div>
 
 <!-- Leaflet CSS & JS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<!-- Incluye tu archivo app.js -->
-<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+
+<!-- Tu archivo centro_ayuda.js -->
+<script src="{{ url_for('static', filename='js/centro_ayuda.js') }}"></script>
+
 {% endblock %}

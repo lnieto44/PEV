@@ -206,61 +206,72 @@ def submit_denuncia():
 
 # Módulo de geolocalización
 
-# Ruta para "centros_ayuda" (ubicada en Usuarios/centros_ayuda.html)
-@app.route('/centros_ayuda')
-def centros_ayuda():
-    return render_template('Usuarios/centros_ayuda.html')
-
 # Ruta para "centro_ayuda" (ubicada en Administrador/centro_ayuda.html)
 @app.route('/centro_ayuda')
 def centro_ayuda():
     return render_template('Administrador/centro_ayuda.html')
 
+@app.route('/centros_ayuda')
+def centros_ayuda():
+    # Lógica de la función
+    return render_template('Usuarios/centros_ayuda.html')
 
-@app.route('/get_help_centers', methods=['GET'])
-def get_help_centers():
+# Ruta para "centros_ayuda" (ubicada en Usuarios/centros_ayuda.html)
+#@app.route('/centros_ayuda')
+#def centros_ayuda():
+#   return render_template('Usuarios/centros_ayuda.html')
+
+
+@app.route('/api/centros_ayuda', methods=['GET'])
+def api_centros_ayuda():
+    # Conectar a la base de datos
     conn = sqlite3.connect('user.db')
     cursor = conn.cursor()
     cursor.execute("SELECT id, name, address, latitude, longitude FROM centros_ayuda")
-    centers = cursor.fetchall()
+    centros = cursor.fetchall()
     conn.close()
 
-    centers_data = [
-        {"id": center[0], "name": center[1], "address": center[2], "latitude": center[3], "longitude": center[4]}
-        for center in centers
+    # Formatear los datos en JSON
+    centros_data = [
+        {"id": centro[0], "name": centro[1], "address": centro[2], "latitude": centro[3], "longitude": centro[4]}
+        for centro in centros
     ]
+    return jsonify(centros_data)
 
-    # Registrar en logs que los centros de ayuda fueron solicitados
-    user_id = session.get('user_id')  # Obtiene el ID del usuario de la sesión
-    if user_id:
-        log_action(user_id=user_id, action="obtener_centros_ayuda", details="Lista de centros de ayuda solicitada")
-
-    return jsonify(centers_data)
 
 @app.route('/sync_help_center', methods=['POST'])
 def sync_help_center():
-    data = request.get_json()
-    name = data.get('name')
-    address = data.get('address')
-    latitude = data.get('latitude')
-    longitude = data.get('longitude')
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"status": "error", "message": "No se recibieron datos"}), 400
+        
+        name = data.get('name')
+        address = data.get('address', 'No especificada')
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
 
-    # Conectar a la base de datos y agregar/actualizar el centro de ayuda
-    conn = sqlite3.connect('user.db')
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT INTO centros_ayuda (name, address, latitude, longitude)
-        VALUES (?, ?, ?, ?)
-    """, (name, address, latitude, longitude))
-    conn.commit()
-    conn.close()
+        if not name or not latitude or not longitude:
+            return jsonify({"status": "error", "message": "Datos incompletos"}), 400
 
-    # Registrar en logs que se ha sincronizado un centro de ayuda
-    user_id = session.get('user_id')  # Obtiene el ID del usuario de la sesión
-    if user_id:
-        log_action(user_id=user_id, action="sync_help_center", details=f"Centro de ayuda sincronizado: {name}")
+        conn = sqlite3.connect('user.db')
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO centros_ayuda (name, address, latitude, longitude)
+            VALUES (?, ?, ?, ?)
+        """, (name, address, latitude, longitude))
+        conn.commit()
+        conn.close()
 
-    return jsonify({"status": "success"})
+        user_id = session.get('user_id')
+        if user_id:
+            log_action(user_id=user_id, action="sync_help_center", details=f"Centro sincronizado: {name}")
+
+        return jsonify({"status": "success", "message": f"Centro de ayuda '{name}' sincronizado correctamente"})
+    
+    except Exception as e:
+        return jsonify({"status": "error", "message": f"Error al sincronizar: {str(e)}"}), 500
+
 
 
 # Gestión de roles para administradores
@@ -315,20 +326,6 @@ def contacto():
         flash("Tu mensaje ha sido enviado. Nos pondremos en contacto contigo pronto.", "success")
         return redirect(url_for('contacto'))
     return render_template('Usuarios/contacto.html')
-
-@app.route('/api/centros_ayuda')
-def api_centros_ayuda():
-    conn = sqlite3.connect('user.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, name, address, latitude, longitude FROM centros_ayuda")
-    centros = cursor.fetchall()
-    conn.close()
-
-    centros_data = [
-        {"id": centro[0], "name": centro[1], "address": centro[2], "latitude": centro[3], "longitude": centro[4]}
-        for centro in centros
-    ]
-    return jsonify(centros_data)
 
 
 @app.route('/caracteristicas')
