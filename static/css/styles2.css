@@ -1,6 +1,5 @@
 /* Reset básico */
 
-
 * {
     margin: 0;
     padding: 0;
@@ -39,26 +38,67 @@ header h1 {
 }
 
 /* Navegación */
+/* Navegación */
 .navbar {
     background-color: #ff6b6b;
+    padding: 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade sombra */
 }
 
 .navbar .navbar-brand {
     color: #fff;
-    font-size: 1.3em;
+    font-size: 1.5em;
     font-weight: bold;
+    margin-right: 20px;
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+}
+
+.navbar .navbar-nav {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente los elementos */
+    align-items: center; /* Alinea verticalmente */
+    gap: 25px; /* Espaciado uniforme entre los enlaces */
 }
 
 .navbar .navbar-nav .nav-link {
     color: #ffffff;
+    font-size: 1.1em;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 5px;
     transition: background-color 0.3s ease, color 0.3s ease;
-    padding: 10px 15px;
+    display: flex; /* Flex para alinear ícono y texto */
+    align-items: center; /* Alinea ícono y texto verticalmente */
+    gap: 8px; /* Espaciado entre ícono y texto */
+    text-decoration: none; /* Elimina subrayado */
+}
+
+.navbar .navbar-nav .nav-link i {
+    font-size: 1.2em; /* Ajusta tamaño del ícono */
 }
 
 .navbar .navbar-nav .nav-link:hover {
     background-color: #ffd700;
     color: #333;
 }
+
+.navbar .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%280, 0, 0, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .navbar .navbar-nav {
+        flex-direction: column; /* Cambia a diseño vertical */
+        align-items: flex-start; /* Alinea a la izquierda */
+        gap: 15px; /* Espaciado menor en móviles */
+    }
+}
+
 
 
 /* Carrusel */
