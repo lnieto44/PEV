@@ -19,33 +19,33 @@ git config --global user.email "tu_correo@ejemplo.com"
 Ir a la página oficial de Visual Studio Code: https://code.visualstudio.com/.
 Descargar e instalar Visual Studio Code según el sistema operativo.
 
-4. Crear una Cuenta en GitHub
+3. Crear una Cuenta en GitHub
 
 Ir a https://github.com/ y registrarse con su correo electrónico.
 Verificar el correo electrónico para activar la cuenta.
 
-5. Abre Visual Studio Code
+4. Abre Visual Studio Code
 
 Inicia Visual Studio Code.
 
 Ve al menú View > Command Palette o usa el atajo Ctrl+Shift+P (Windows/Linux) o Cmd+Shift+P (macOS).
 Escribe Git: Clone y selecciona la opción.
 
-6. Pegar la URL del Repositorio
+5. Pegar la URL del Repositorio
    
 Pega la URL del repositorio que copiaste antes.
 https://github.com/lnieto44/PEV.git
 
 Visual Studio Code te pedirá que selecciones una carpeta local donde clonar el repositorio.
 
-4. Verifica que se clonó correctamente
+6. Verifica que se clonó correctamente
 Una vez clonado:
 
 VS Code abrirá automáticamente la carpeta del proyecto.
 Deberías ver los archivos del repositorio en el panel izquierdo.
 En la barra inferior de VS Code, debería mostrarse la rama actual, por ejemplo: main.
 
-5. Comprueba el Estado del Repositorio
+7. Comprueba el Estado del Repositorio
    
 Abre la terminal integrada (Ctrl+``) o usa el menú View > Terminal`.
 Escribe:
@@ -53,7 +53,7 @@ git status
 
 Esto mostrará si el repositorio se clonó correctamente y si hay cambios pendientes.
 
-6. instalacion de todos los paquetes requeridos: Flask, Flask-SQLAlchemy, Flask-Login y Werkzeug en la terminal de visual code
+8. instalacion de todos los paquetes requeridos: Flask, Flask-SQLAlchemy, Flask-Login y Werkzeug en la terminal de visual code
 
 pip install flask flask-sqlalchemy flask-login werkzeug
 
