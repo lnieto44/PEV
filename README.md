@@ -57,6 +57,9 @@ Esto mostrará si el repositorio se clonó correctamente y si hay cambios pendie
 
 pip install flask flask-sqlalchemy flask-login werkzeug
 
-9. ejecutar la app
+9. Intalar paquete para el chat
+    pip install flask-socketio
+
+10. ejecutar la app
 
 python app.py
