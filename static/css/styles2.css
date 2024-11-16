@@ -182,3 +182,97 @@ footer {
     box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Estilos generales para el chat flotante */
+#chat-widget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* Botón flotante */
+#chat-toggle {
+    background-color: #FF9800; /* Naranja oscuro */
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#chat-toggle img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Ventana del chat */
+#chat-box {
+    display: none;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background: #FFF3E0; /* Naranja claro */
+    border: 1px solid #FF9800;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Encabezado del chat */
+#chat-header {
+    background: #FF9800; /* Naranja oscuro */
+    color: white;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chat-header strong {
+    font-size: 16px;
+}
+
+#chat-header #chat-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Contenido del chat */
+#chat-content {
+    padding: 10px;
+    overflow-y: auto;
+    height: 300px;
+}
+
+/* Formulario del chat */
+#chat-form {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #FFCC80;
+}
+
+#chat-form input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #FFCC80;
+    border-radius: 5px;
+}
+
+#chat-form button {
+    background: #FF9800; /* Naranja oscuro */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+

@@ -1,173 +1,124 @@
-from flask import Flask, jsonify, render_template, redirect, session, url_for, request, flash
+from flask import Flask, render_template, redirect, session, url_for, request, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-import sqlite3
-
+from flask_socketio import SocketIO, emit
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import sqlite3
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///user.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+# Inicializar Socket.IO
+socketio = SocketIO(app)
 
-# Definición del modelo de Usuario
+# Modelo de usuario
 class User(UserMixin, db.Model):
     __tablename__ = 'usuarios'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(150), nullable=False)
-    role = db.Column(db.String(50), nullable=False, default="user")
+    email = db.Column(db.String(150), unique=True, nullable=False)
+    role = db.Column(db.String(50), nullable=False, default='user')  # Roles: 'admin', 'user'
 
+# Modelo para registrar acciones (logs)
+class Log(db.Model):
+    __tablename__ = 'logs'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    action = db.Column(db.String(50), nullable=False)
+    details = db.Column(db.Text, nullable=True)
 
 # Cargar usuario para Flask-Login
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# Función para registrar acciones
+def log_action(user_id, action, details=None):
+    log = Log(user_id=user_id, action=action, details=details)
+    db.session.add(log)
+    db.session.commit()
 
-# Ruta para iniciar sesión
+# Ruta principal
+@app.route('/')
+def home():
+    return render_template('Usuarios/home.html')
+
+# Rutas principales de autenticación
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        user = User.query.filter_by(username=username).first()
 
-        conn = sqlite3.connect('user.db')
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, password, role_id FROM usuarios WHERE username = ?", (username,))
-        user = cursor.fetchone()
-        conn.close()
-
-        if user and check_password_hash(user[1], password):
-            session['user_id'] = user[0]
-            session['role_id'] = user[2]
-
-            # Registrar el inicio de sesión en la tabla logs
-            log_action(user_id=user[0], action="login", details="El usuario inició sesión")
-
+        if user and check_password_hash(user.password, password):
+            login_user(user)
+            log_action(user.id, 'login', 'Usuario inició sesión')
             flash('Inicio de sesión exitoso', 'success')
-            return redirect(url_for('dashboard' if session['role_id'] == 1 else 'denuncia_form'))
+            return redirect(url_for('dashboard' if user.role == 'admin' else 'user_page'))
         else:
             flash('Credenciales incorrectas', 'danger')
-    
     return render_template('Usuarios/login.html')
 
-# Ruta para cerrar sesión
 @app.route('/logout')
 def logout():
-    user_id = session.get('user_id')
-    if user_id:
-        # Registrar el cierre de sesión en la tabla logs
-        log_action(user_id=user_id, action="logout", details="El usuario cerró sesión")
-        
-    session.clear()
+    log_action(current_user.id, 'logout', 'Usuario cerró sesión')
+    logout_user()
     flash('Has cerrado sesión', 'info')
     return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Obtener datos del formulario
         username = request.form['username']
-        password = request.form['password']
         email = request.form['email']
-        tipo_documento = request.form.get('tipo_documento')
-        cedula = request.form.get('cedula')
-        primer_nombre = request.form.get('primer_nombre')
-        segundo_nombre = request.form.get('segundo_nombre')
-        primer_apellido = request.form.get('primer_apellido')
-        segundo_apellido = request.form.get('segundo_apellido')
-        edad = request.form.get('edad')
-
-        # Encriptar la contraseña para seguridad
+        password = request.form['password']
         hashed_password = generate_password_hash(password)
 
-        # Definir el role_id para el usuario (ejemplo: 2 para usuarios regulares)
-        role_id = 2  # Suponiendo que 2 es el ID para el rol 'user' en la tabla roles
-
-        # Insertar el nuevo usuario en la base de datos
-        try:
-            conn = sqlite3.connect('user.db')
-            cursor = conn.cursor()
-            cursor.execute("""
-                INSERT INTO usuarios (username, password, email, tipo_documento, cedula, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, edad, role_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """, (username, hashed_password, email, tipo_documento, cedula, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, edad, role_id))
-            conn.commit()
-            conn.close()
-
-            flash('Usuario registrado exitosamente!', 'success')
+        if User.query.filter_by(username=username).first():
+            flash('El nombre de usuario ya está registrado', 'danger')
             return redirect(url_for('register'))
-        except sqlite3.Error as e:
-            flash(f'Error al registrar el usuario: {e}', 'danger')
+
+        if User.query.filter_by(email=email).first():
+            flash('El correo electrónico ya está registrado', 'danger')
             return redirect(url_for('register'))
+
+        new_user = User(username=username, email=email, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Usuario registrado exitosamente', 'success')
+        return redirect(url_for('login'))
 
     return render_template('Usuarios/register.html')
 
-
-# Vista de dashboard para administradores
+# Rutas específicas para usuarios y administradores
 @app.route('/dashboard')
-@login_required
-def admin_dashboard():
+def dashboard():
     if current_user.role != 'admin':
-        flash('Acceso denegado. Solo los administradores pueden ver esta página.')
+        flash('Acceso denegado', 'danger')
         return redirect(url_for('user_page'))
-    
-    # Conectar a la base de datos y obtener datos para la vista
-    conn = sqlite3.connect('users.db')
-    cursor = conn.cursor()
 
-    # Obtener el total de denuncias
-    total_denuncias = cursor.execute('SELECT COUNT(*) FROM denuncias').fetchone()[0]
-    
-    # Obtener el total de usuarios
-    total_usuarios = cursor.execute('SELECT COUNT(*) FROM usuarios').fetchone()[0]
+    total_users = User.query.count()
+    logs = Log.query.order_by(Log.id.desc()).limit(10).all()
+    return render_template('Administrador/dashboard.html', total_users=total_users, logs=logs)
 
-    # Obtener el número de denuncias activas
-    casos_activos = cursor.execute('SELECT COUNT(*) FROM denuncias WHERE estado = "activo"').fetchone()[0]
+@app.route('/user_page')
+def user_page():
+    return render_template('Usuarios/user_page.html')
 
-    # Obtener denuncias mensuales (ejemplo de datos para 5 meses)
-    labels_meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo"]
-    datos_mensuales = []
-    for mes in range(1, 6):  # Enero = 1, Mayo = 5 (por ejemplo)
-        count = cursor.execute('SELECT COUNT(*) FROM denuncias WHERE strftime("%m", fecha_creacion) = ?', 
-                               (f"{mes:02d}",)).fetchone()[0]
-        datos_mensuales.append(count)
-    
-    # Obtener la distribución de tipos de denuncias
-    labels_tipos = ["Física", "Psicológica", "Sexual", "Económica"]
-    datos_tipos = []
-    for tipo in labels_tipos:
-        count = cursor.execute('SELECT COUNT(*) FROM denuncias WHERE tipo = ?', (tipo,)).fetchone()[0]
-        datos_tipos.append(count)
-    
-    # Obtener la distribución de estados de denuncias
-    labels_estados = ["Activo", "En Proceso", "Cerrado"]
-    datos_estados = []
-    for estado in labels_estados:
-        count = cursor.execute('SELECT COUNT(*) FROM denuncias WHERE estado = ?', (estado,)).fetchone()[0]
-        datos_estados.append(count)
+# Ruta para el chat flotante
+@app.route('/chat')
 
-    conn.close()
-
-    return render_template('dashboard.html', 
-                           total_denuncias=total_denuncias, 
-                           casos_activos=casos_activos,
-                           total_usuarios=total_usuarios,
-                           labels_meses=labels_meses,
-                           datos_mensuales=datos_mensuales,
-                           labels_tipos=labels_tipos,
-                           datos_tipos=datos_tipos,
-                           labels_estados=labels_estados,
-                           datos_estados=datos_estados)
-
-
-# Página de usuario
+def chat_page():
+    return render_template('Usuarios/principal.html')
 
 # Ruta para mostrar el formulario de denuncia 
 @app.route('/denuncia', methods=['GET'])
@@ -204,113 +155,36 @@ def submit_denuncia():
     flash('Denuncia enviada exitosamente', 'success')
     return redirect(url_for('denuncia_form'))
 
-# Módulo de geolocalización
+# Funciones del Chat
+@socketio.on('chatMessage')
+def handle_chat_message(data):
+    user_message = data.get('message', '')
+    bot_response = generate_bot_response(user_message)
+    emit('message', {'user': 'Chatbot', 'message': bot_response}, broadcast=True)
 
-# Ruta para "centro_ayuda" (ubicada en Administrador/centro_ayuda.html)
-@app.route('/centro_ayuda')
-def centro_ayuda():
-    return render_template('Administrador/centro_ayuda.html')
+def generate_bot_response(user_message):
+    if "hola" in user_message.lower():
+        return "¡Hola! ¿Cómo puedo ayudarte hoy?"
+    elif "ayuda" in user_message.lower():
+        return "¡Claro! Estoy aquí para ayudarte."
+    else:
+        return "No entendí tu mensaje. ¿Puedes intentarlo de nuevo?"
 
-@app.route('/centros_ayuda')
+# Módulos de geolocalización
+@app.route('/centros_ayuda', methods=['GET'])
 def centros_ayuda():
-    # Lógica de la función
     return render_template('Usuarios/centros_ayuda.html')
-
-# Ruta para "centros_ayuda" (ubicada en Usuarios/centros_ayuda.html)
-#@app.route('/centros_ayuda')
-#def centros_ayuda():
-#   return render_template('Usuarios/centros_ayuda.html')
-
 
 @app.route('/api/centros_ayuda', methods=['GET'])
 def api_centros_ayuda():
-    # Conectar a la base de datos
-    conn = sqlite3.connect('user.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT id, name, address, latitude, longitude FROM centros_ayuda")
-    centros = cursor.fetchall()
-    conn.close()
-
-    # Formatear los datos en JSON
-    centros_data = [
-        {"id": centro[0], "name": centro[1], "address": centro[2], "latitude": centro[3], "longitude": centro[4]}
-        for centro in centros
+    # Simulación de datos para centros de ayuda
+    centros = [
+        {"id": 1, "name": "Centro 1", "address": "Dirección 1", "latitude": 4.123, "longitude": -74.123},
+        {"id": 2, "name": "Centro 2", "address": "Dirección 2", "latitude": 4.234, "longitude": -74.234},
     ]
-    return jsonify(centros_data)
+    return jsonify(centros)
 
-
-@app.route('/sync_help_center', methods=['POST'])
-def sync_help_center():
-    try:
-        data = request.get_json()
-        if not data:
-            return jsonify({"status": "error", "message": "No se recibieron datos"}), 400
-        
-        name = data.get('name')
-        address = data.get('address', 'No especificada')
-        latitude = data.get('latitude')
-        longitude = data.get('longitude')
-
-        if not name or not latitude or not longitude:
-            return jsonify({"status": "error", "message": "Datos incompletos"}), 400
-
-        conn = sqlite3.connect('user.db')
-        cursor = conn.cursor()
-        cursor.execute("""
-            INSERT INTO centros_ayuda (name, address, latitude, longitude)
-            VALUES (?, ?, ?, ?)
-        """, (name, address, latitude, longitude))
-        conn.commit()
-        conn.close()
-
-        user_id = session.get('user_id')
-        if user_id:
-            log_action(user_id=user_id, action="sync_help_center", details=f"Centro sincronizado: {name}")
-
-        return jsonify({"status": "success", "message": f"Centro de ayuda '{name}' sincronizado correctamente"})
-    
-    except Exception as e:
-        return jsonify({"status": "error", "message": f"Error al sincronizar: {str(e)}"}), 500
-
-
-
-# Gestión de roles para administradores
-@app.route('/administrar_roles', methods=['GET', 'POST'])
-@login_required
-def manage_roles():
-    if current_user.role != 'admin':
-        flash('Acceso denegado.')
-        return redirect(url_for('user_page'))
-    if request.method == 'POST':
-        user_id = request.form.get('user_id')
-        new_role = request.form.get('role')
-        user = User.query.get(user_id)
-        if user:
-            user.role = new_role
-            db.session.commit()
-            flash('Rol actualizado con éxito.')
-        else:
-            flash('Usuario no encontrado.')
-    users = User.query.all()
-    return render_template('Administrador/administrar_roles.html', users=users)
-
-#log llevar la traza de los registros de los eventos de la platafoma
-def log_action(user_id, action, details=None):
-    """Registra una acción del usuario en la tabla logs."""
-    conn = sqlite3.connect('user.db')
-    cursor = conn.cursor()
-    cursor.execute("""
-        INSERT INTO logs (user_id, action, details)
-        VALUES (?, ?, ?)
-    """, (user_id, action, details))
-    conn.commit()
-    conn.close()
-
-
-@app.route('/')
-def home():
-    return render_template('Usuarios/home.html')
-
+# Rutas informativas
 @app.route('/quienes_somos')
 def quienes_somos():
     return render_template('Usuarios/quienes_somos.html')
@@ -318,28 +192,24 @@ def quienes_somos():
 @app.route('/contacto', methods=['GET', 'POST'])
 def contacto():
     if request.method == 'POST':
-        # Obtener datos del formulario
         nombre = request.form['nombre']
         email = request.form['email']
         mensaje = request.form['mensaje']
-        # Aquí puedes manejar el mensaje, como almacenarlo en una base de datos o enviarlo por correo
         flash("Tu mensaje ha sido enviado. Nos pondremos en contacto contigo pronto.", "success")
         return redirect(url_for('contacto'))
     return render_template('Usuarios/contacto.html')
 
-
 @app.route('/caracteristicas')
 def caracteristicas():
-    return render_template('Usuarios/sobre-mi.html')  # Página de características
+    return render_template('Usuarios/sobre-mi.html')
 
 @app.route('/servicios')
 def servicios():
-    return render_template('Usuarios/servicios.html')  # Página de servicios
+    return render_template('Usuarios/servicios.html')
 
-
+# Inicialización manual de tablas
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()  # Crear tablas si no existen en la base de datos
-    app.run(debug=True)
-
+    app.app_context().push()  # Crear un contexto explícito para la aplicación
+    db.create_all()  # Crear tablas en la base de datos si no existen
+    socketio.run(app, debug=True)
 
