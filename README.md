@@ -49,6 +49,7 @@ En la barra inferior de VS Code, debería mostrarse la rama actual, por ejemplo:
    
 Abre la terminal integrada (Ctrl+``) o usa el menú View > Terminal`.
 Escribe:
+
 git status
 
 Esto mostrará si el repositorio se clonó correctamente y si hay cambios pendientes.
@@ -58,9 +59,11 @@ Esto mostrará si el repositorio se clonó correctamente y si hay cambios pendie
 pip install flask flask-sqlalchemy flask-login werkzeug
 
 Nota: si no funciona pip 
+
 python -m ensurepip --upgrade
 
 python -m ensurepip
+
 python -m pip install --upgrade pip
 
 pip --version
