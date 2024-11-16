@@ -57,6 +57,6 @@ Esto mostrará si el repositorio se clonó correctamente y si hay cambios pendie
 
 pip install flask flask-sqlalchemy flask-login werkzeug
 
-7. ejecutar la app
+9. ejecutar la app
 
 python app.py
