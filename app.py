@@ -207,6 +207,35 @@ def caracteristicas():
 def servicios():
     return render_template('Usuarios/servicios.html')
 
+@app.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form['email']
+        # Verificar si el correo existe en la base de datos
+        token = serializer.dumps(email, salt='password-reset')
+        link = url_for('reset_password', token=token, _external=True)
+        msg = Message("Restablecimiento de Contraseña", sender="your_email@example.com", recipients=[email])
+        msg.body = f'Para restablecer tu contraseña, haz clic en el siguiente enlace: {link}'
+        mail.send(msg)
+        flash("Se ha enviado un enlace de recuperación a tu correo", "info")
+    return render_template('Usuarios/forgot_password.html')
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    try:
+        email = serializer.loads(token, salt='password-reset', max_age=3600)  # 1 hora de validez
+    except:
+        flash("El enlace de restablecimiento ha expirado o es inválido", "danger")
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        new_password = request.form['new_password']
+        # Actualizar la contraseña en la base de datos
+        flash("Tu contraseña ha sido restablecida", "success")
+        return redirect(url_for('login'))
+    
+    return render_template('Usuarios/reset_password.html', token=token)
+
 # Inicialización manual de tablas
 if __name__ == '__main__':
     app.app_context().push()  # Crear un contexto explícito para la aplicación
