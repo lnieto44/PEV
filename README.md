@@ -69,9 +69,10 @@ python -m pip install --upgrade pip
 pip --version
 
 9. Intalar paquete para el chat
+    
     pip install flask-socketio
 
-10. ejecutar la app
+11. ejecutar la app
 
 python app.py
 
