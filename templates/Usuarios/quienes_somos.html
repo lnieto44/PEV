@@ -2,20 +2,26 @@
 {% block title %}Quiénes Somos - PEV{% endblock %}
 
 {% block content %}
-<section class="section container text-center mt-5">
-    <h2>¿Quiénes Somos?</h2>
-    <p>Somos una organización dedicada a brindar apoyo y recursos a víctimas de violencia. Nuestro objetivo es ofrecer un espacio seguro y de confianza donde las personas puedan encontrar el apoyo necesario para superar situaciones difíciles.</p>
+<section class="section container text-center my-5">
+    <!-- Encabezado -->
+    <div class="mb-5">
+        <h2 class="text-orange">¿Quiénes Somos?</h2>
+        <p class="text-muted">Somos una organización dedicada a brindar apoyo y recursos a víctimas de violencia. Nuestro objetivo es ofrecer un espacio seguro y de confianza donde las personas puedan encontrar el apoyo necesario para superar situaciones difíciles.</p>
+    </div>
 
+    <!-- Contenido de Misión y Visión -->
     <div class="row mt-4">
+        <!-- Misión -->
         <div class="col-md-6">
-            <img src="{{ url_for('static', filename='img/mision.jpg') }}" alt="Misión" class="img-fluid rounded mb-3">
-            <h5>Nuestra Misión</h5>
-            <p>Proporcionar recursos, acompañamiento y apoyo integral a quienes han sufrido violencia, ayudándoles a reconstruir sus vidas y a encontrar el camino hacia un futuro seguro y libre de violencia.</p>
+            <img src="{{ url_for('static', filename='img/mision.jpg') }}" alt="Misión" class="img-fluid rounded shadow mb-3">
+            <h5 class="text-orange">Nuestra Misión</h5>
+            <p class="text-muted">Proporcionar recursos, acompañamiento y apoyo integral a quienes han sufrido violencia, ayudándoles a reconstruir sus vidas y a encontrar el camino hacia un futuro seguro y libre de violencia.</p>
         </div>
+        <!-- Visión -->
         <div class="col-md-6">
-            <img src="{{ url_for('static', filename='img/vision.jpg') }}" alt="Visión" class="img-fluid rounded mb-3">
-            <h5>Nuestra Visión</h5>
-            <p>Ser una fuente confiable de apoyo y seguridad para víctimas de violencia en nuestra comunidad, promoviendo una sociedad donde todos puedan vivir en paz y con dignidad.</p>
+            <img src="{{ url_for('static', filename='img/vision.jpg') }}" alt="Visión" class="img-fluid rounded shadow mb-3">
+            <h5 class="text-orange">Nuestra Visión</h5>
+            <p class="text-muted">Ser una fuente confiable de apoyo y seguridad para víctimas de violencia en nuestra comunidad, promoviendo una sociedad donde todos puedan vivir en paz y con dignidad.</p>
         </div>
     </div>
 </section>
