@@ -1,18 +1,26 @@
 {% extends "Usuarios/home.html" %}
 {% block content %}
-<div class="container">
-    <h3>Formulario de Denuncia</h3>
-    <form method="POST" action="{{ url_for('submit_denuncia') }}">
+<div class="container my-5">
+    <div class="text-center mb-4">
+        <h3 class="title-color">Formulario de Denuncia</h3>
+        <p class="text-muted">Por favor, completa el siguiente formulario para reportar un incidente.</p>
+    </div>
+    <form method="POST" action="{{ url_for('submit_denuncia') }}" class="p-4 shadow rounded bg-light mx-auto" style="max-width: 600px;">
         <!-- Descripción del incidente -->
-        <div class="form-group">
-            <label for="description">Descripción del incidente:</label>
-            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+        <div class="mb-3">
+            <label for="description" class="form-label">
+                <i class="fas fa-edit me-2 text-orange"></i>Descripción del incidente
+            </label>
+            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Describe lo sucedido..." required></textarea>
         </div>
 
         <!-- Tipo de Incidente -->
-        <div class="form-group">
-            <label for="incident_type">Tipo de Incidente:</label>
-            <select class="form-control" id="incident_type" name="incident_type" required>
+        <div class="mb-3">
+            <label for="incident_type" class="form-label">
+                <i class="fas fa-exclamation-circle me-2 text-orange"></i>Tipo de Incidente
+            </label>
+            <select class="form-select" id="incident_type" name="incident_type" required>
+                <option value="" disabled selected>Selecciona el tipo de incidente</option>
                 <option value="Robo">Robo</option>
                 <option value="Asalto">Asalto</option>
                 <option value="Acoso">Acoso</option>
@@ -21,32 +29,44 @@
         </div>
 
         <!-- Ubicación del incidente -->
-        <div class="form-group">
-            <label for="location">Ubicación del incidente:</label>
+        <div class="mb-3">
+            <label for="location" class="form-label">
+                <i class="fas fa-map-marker-alt me-2 text-orange"></i>Ubicación del incidente
+            </label>
             <input type="text" class="form-control" id="location" name="location" placeholder="Dirección o lugar específico" required>
         </div>
 
         <!-- Nombre del denunciante (opcional) -->
-        <div class="form-group">
-            <label for="nombre">Nombre del denunciante (opcional):</label>
+        <div class="mb-3">
+            <label for="nombre" class="form-label">
+                <i class="fas fa-user me-2 text-orange"></i>Nombre del denunciante (opcional)
+            </label>
             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Tu nombre">
         </div>
 
         <!-- Teléfono de contacto (opcional) -->
-        <div class="form-group">
-            <label for="telefono">Teléfono de contacto (opcional):</label>
+        <div class="mb-3">
+            <label for="telefono" class="form-label">
+                <i class="fas fa-phone me-2 text-orange"></i>Teléfono de contacto (opcional)
+            </label>
             <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Número de teléfono">
         </div>
 
         <!-- Correo electrónico (opcional) -->
-        <div class="form-group">
-            <label for="email">Correo electrónico (opcional):</label>
+        <div class="mb-4">
+            <label for="email" class="form-label">
+                <i class="fas fa-envelope me-2 text-orange"></i>Correo electrónico (opcional)
+            </label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Correo electrónico">
         </div>
 
-        <!-- Botón de envío -->
-        <button type="submit" class="btn btn-primary">Enviar Denuncia</button>
+        <!-- Botón de Enviar -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-orange py-2">
+                <i class="fas fa-paper-plane me-2"></i>Enviar Denuncia
+            </button>
+        </div>
     </form>
 </div>
-{% endblock %}
 
+{% endblock %}
