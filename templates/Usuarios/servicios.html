@@ -1,132 +1,74 @@
 {% extends "Usuarios/principal.html" %}
 
-
 {% block title %}Nuestros Servicios{% endblock %}
 
 {% block content %}
-<section class="services-section container mt-5 p-5">
+<section class="services-section">
     <div class="section-inner">
-        <h2 class="section-title">NUESTROS SERVICIOS</h2>
-        <p class="section-subtitle">Nuestra plataforma aborda todos los tipos de violencia: física, psicológica, sexual, económica, digital y proporciona herramientas para la denuncia anónima, seguimiento de casos, análisis predictivo y generación automática de informes, convirtiéndola en una solución robusta y versátil.</p>
-        
+        <!-- Título Principal -->
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <p class="section-subtitle">
+            Nuestra plataforma aborda todos los tipos de violencia: física, psicológica, sexual, económica, digital.
+            Proporciona herramientas para la denuncia anónima, seguimiento de casos, análisis predictivo y generación automática de informes, convirtiéndola en una solución robusta y versátil.
+        </p>
+
+        <!-- Funciones Clave -->
         <h3 class="section-features-title">Funciones Clave de la Plataforma</h3>
-        
         <div class="row mt-4">
+            <!-- Primera Fila de Servicios -->
             <div class="col-md-4">
                 <div class="service-card">
                     <h3>Denuncias Anónimas</h3>
-                    <p>Las víctimas podrán reportar incidentes sin revelar su identidad, reduciendo el miedo a represalias y estigmatización.</p>
+                    <p>
+                        Las víctimas podrán reportar incidentes sin revelar su identidad, reduciendo el miedo a represalias y estigmatización.
+                    </p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="service-card">
                     <h3>Geolocalización</h3>
-                    <p>Utiliza tecnología de geolocalización para mostrar los centros de ayuda más cercanos, facilitando el acceso a recursos de apoyo.</p>
+                    <p>
+                        Utiliza tecnología de geolocalización para mostrar los centros de ayuda más cercanos, facilitando el acceso a recursos de apoyo.
+                    </p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="service-card">
                     <h3>Chat en Tiempo Real</h3>
-                    <p>Permite a las víctimas comunicarse de forma inmediata con personal capacitado para recibir orientación y apoyo.</p>
+                    <p>
+                        Permite a las víctimas comunicarse de forma inmediata con personal capacitado para recibir orientación y apoyo.
+                    </p>
                 </div>
             </div>
         </div>
-        
+
         <div class="row mt-4">
+            <!-- Segunda Fila de Servicios -->
             <div class="col-md-4">
                 <div class="service-card">
                     <h3>Seguimiento de Casos</h3>
-                    <p>Permite a las víctimas dar seguimiento a sus denuncias, actualizando su estado en tiempo real y comunicándose con las autoridades.</p>
+                    <p>
+                        Permite a las víctimas dar seguimiento a sus denuncias, actualizando su estado en tiempo real y comunicándose con las autoridades.
+                    </p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="service-card">
                     <h3>Análisis de Datos</h3>
-                    <p>Proporciona herramientas de análisis para identificar patrones de violencia en diferentes regiones, facilitando la prevención y respuesta oportuna.</p>
+                    <p>
+                        Proporciona herramientas de análisis para identificar patrones de violencia en diferentes regiones, facilitando la prevención y respuesta oportuna.
+                    </p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="service-card">
                     <h3>Generación Automática de Reportes</h3>
-                    <p>Genera informes automáticos para las instituciones, mejorando la toma de decisiones y políticas públicas basadas en datos.</p>
+                    <p>
+                        Genera informes automáticos para las instituciones, mejorando la toma de decisiones y políticas públicas basadas en datos.
+                    </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<style>
-    /* Estilos para la sección de servicios */
-    .services-section {
-        padding: 40px 20px;
-        background-color: #fdf3e7; /* Fondo claro */
-        text-align: center;
-        border-radius: 20px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
-        margin-top: 40px;
-        max-width: 95%; /* Ajuste del ancho para un contorno más amplio */
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .section-inner {
-        padding: 20px;
-    }
-
-    .section-title {
-        font-size: 2.8em;
-        color: #cc5500;
-        margin-bottom: 20px;
-        font-weight: bold;
-        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .section-subtitle {
-        font-size: 1.1em;
-        color: #6c757d;
-        margin-bottom: 40px;
-        max-width: 80%;
-        margin-left: auto;
-        margin-right: auto;
-        text-align: justify; /* Justificación de texto */
-    }
-
-    .section-features-title {
-        font-size: 1.5em;
-        color: #6c757d;
-        margin-bottom: 30px;
-        font-weight: 600;
-    }
-
-    .service-card {
-        background-color: #ffffff;
-        padding: 25px;
-        border-radius: 15px; /* Bordes redondeados */
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra suave */
-        text-align: center;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        margin-bottom: 20px;
-    }
-
-    .service-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-    }
-
-    .service-card h3 {
-        color: #cc5500; /* Color del título en cada tarjeta */
-        font-size: 1.5em;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
-
-    .service-card p {
-        color: #6c757d; /* Texto en gris suave */
-        font-size: 1em;
-        line-height: 1.6;
-        text-align: justify; /* Justificación de texto en cada tarjeta */
-    }
-</style>
-
 {% endblock %}
-
