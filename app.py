@@ -160,7 +160,7 @@ def submit_denuncia():
 def handle_chat_message(data):
     user_message = data.get('message', '')
     bot_response = generate_bot_response(user_message)
-    emit('message', {'user': 'Chatbot', 'message': bot_response}, broadcast=True)
+    emit('message', {'user': 'PEV', 'message': bot_response}, broadcast=True)
 
 def generate_bot_response(user_message):
     if "hola" in user_message.lower():
