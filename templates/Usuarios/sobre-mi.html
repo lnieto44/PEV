@@ -1,24 +1,51 @@
 {% extends "Usuarios/home.html" %}
 {% block content %}
-<div class="container mt-5">
-    <h2>¿Qué Sucede?</h2>
-    <p>La violencia de género en Colombia continúa siendo un problema grave, afectando a mujeres, hombres y niños...</p>
-    
-    <div class="row mt-4">
+<div class="container my-5">
+    <!-- Encabezado -->
+    <div class="text-center mb-5">
+        <h2 class="text-orange">¿Qué Sucede?</h2>
+        <p class="text-muted">
+            La violencia de género en Colombia continúa siendo un problema grave, afectando a mujeres, hombres y niños. Nuestra plataforma busca concienciar y ofrecer soluciones tecnológicas para combatir esta problemática.
+        </p>
+    </div>
+
+    <!-- Sección de Información -->
+    <div class="row g-4">
+        <!-- ¿Por Qué Sucede? -->
         <div class="col-md-4">
-            <img src="{{ url_for('static', filename='img/m3.jpg') }}" alt="¿Por Qué Sucede?" class="img-fluid rounded mb-3">
-            <h3>¿Por Qué Sucede?</h3>
-            <p>A pesar de la existencia de leyes en Colombia, la implementación efectiva se ve obstaculizada...</p>
+            <div class="card shadow-sm h-100">
+                <img src="{{ url_for('static', filename='img/m3.jpg') }}" alt="¿Por Qué Sucede?" class="card-img-top rounded-top">
+                <div class="card-body">
+                    <h5 class="card-title text-orange">¿Por Qué Sucede?</h5>
+                    <p class="card-text text-muted">
+                        A pesar de la existencia de leyes en Colombia, la implementación efectiva se ve obstaculizada por barreras sociales y tecnológicas.
+                    </p>
+                </div>
+            </div>
         </div>
+        <!-- ¿A Quiénes Afecta? -->
         <div class="col-md-4">
-            <img src="{{ url_for('static', filename='img/m4.jpg') }}" alt="¿A Quiénes Afecta?" class="img-fluid rounded mb-3">
-            <h3>¿A Quiénes Afecta?</h3>
-            <p>La violencia de género afecta a mujeres, hombres y niños...</p>
+            <div class="card shadow-sm h-100">
+                <img src="{{ url_for('static', filename='img/m4.jpg') }}" alt="¿A Quiénes Afecta?" class="card-img-top rounded-top">
+                <div class="card-body">
+                    <h5 class="card-title text-orange">¿A Quiénes Afecta?</h5>
+                    <p class="card-text text-muted">
+                        La violencia de género afecta a mujeres, hombres y niños, perpetuando un ciclo de desigualdad y vulnerabilidad.
+                    </p>
+                </div>
+            </div>
         </div>
+        <!-- ¿De Qué Manera? -->
         <div class="col-md-4">
-            <img src="{{ url_for('static', filename='img/m5.jpg') }}" alt="¿De Qué Manera?" class="img-fluid rounded mb-3">
-            <h3>¿De Qué Manera?</h3>
-            <p>La falta de herramientas tecnológicas limita la capacidad de gestionar y analizar los casos...</p>
+            <div class="card shadow-sm h-100">
+                <img src="{{ url_for('static', filename='img/m5.jpg') }}" alt="¿De Qué Manera?" class="card-img-top rounded-top">
+                <div class="card-body">
+                    <h5 class="card-title text-orange">¿De Qué Manera?</h5>
+                    <p class="card-text text-muted">
+                        La falta de herramientas tecnológicas limita la capacidad de gestionar, analizar y prevenir casos de violencia de género de manera efectiva.
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
