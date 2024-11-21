@@ -14,14 +14,14 @@ body {
 }
 
 .title-color {
-    color: #cc5500;
+    color: #002F6C;
     font-weight: bold;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Opcional: sombra ligera */
 }
 
 
 .text-orange {
-    color: #cc5500;
+    color: #002F6C;
     font-weight: bold;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
@@ -41,11 +41,11 @@ body {
 
 .form-control:focus, .form-select:focus {
     box-shadow: 0 0 6px rgba(255, 140, 0, 0.5);
-    border-color: #cc5500;
+    border-color: #002F6C;
 }
 
 .btn-orange {
-    background-color: #cc5500;
+    background-color: #002F6C;
     color: white;
     border: none;
     border-radius: 8px;
@@ -55,7 +55,7 @@ body {
 }
 
 .btn-orange:hover {
-    background-color: #b34700; /* Fondo más oscuro */
+    background-color: #4D4D4D; /* Fondo más oscuro */
     color: #ffffff; /* Mantiene el texto blanco */
     transform: translateY(-2px); /* Animación de elevación */
 }
@@ -67,7 +67,7 @@ body {
 }
 
 .hover-link:hover {
-    color: #b34700;
+    color: #002F6C;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     text-decoration: underline;
 }
@@ -79,7 +79,7 @@ body {
 
 /* Header */
 header {
-    background: linear-gradient(135deg, #ff6b6b, #ff8a5c);
+    background: linear-gradient(135deg, #002F6C , #B3B3B3);
     color: #ffffff;
     padding: 20px 0;
     text-align: center;
@@ -104,7 +104,7 @@ header h1 {
 /* Navegación */
 /* Navegación */
 .navbar {
-    background-color: #ff6b6b;
+    background-color: #002F6C;
     padding: 10px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añade sombra */
 }
@@ -142,7 +142,7 @@ header h1 {
 }
 
 .navbar .navbar-nav .nav-link:hover {
-    background-color: #ff7f50;
+    background-color: #002F6C;
     color: #ffff;
 }
 
@@ -229,7 +229,7 @@ header h1 {
 
 .contact-section h2 {
     font-size: 2em;
-    color: #cc5500;
+    color: #002F6C;
     margin-bottom: 20px;
 }
 
@@ -252,7 +252,7 @@ header h1 {
 
 .contact-form label {
     margin-top: 10px;
-    color: #cc5500;
+    color: #002F6C;
 }
 
 .contact-form input, .contact-form textarea {
@@ -265,7 +265,7 @@ header h1 {
 .contact-form button {
     margin-top: 20px;
     padding: 10px;
-    background-color: #ff7f50;
+    background-color: #002F6C;
     color: white;
     border: none;
     border-radius: 5px;
@@ -274,12 +274,12 @@ header h1 {
 }
 
 .contact-form button:hover {
-    background-color: #ff6347;
+    background-color: #4D4D4D;
 }
 
 /* Footer */
 footer {
-    background-color: #ff7f50;
+    background-color: #002F6C;
     color: #ffffff;
     text-align: center;
     padding: 15px;
@@ -296,7 +296,7 @@ footer {
 
 /* Botón flotante */
 #chat-toggle {
-    background-color: #FF9800; /* Naranja oscuro */
+    background-color: #002F6C; /* Naranja oscuro */
     border: none;
     border-radius: 50%;
     width: 60px;
@@ -321,14 +321,14 @@ footer {
     width: 300px;
     height: 400px;
     background: #FFF3E0; /* Naranja claro */
-    border: 1px solid #FF9800;
+    border: 1px solid #002F6C;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Encabezado del chat */
 #chat-header {
-    background: #FF9800; /* Naranja oscuro */
+    background: #002F6C; /* Naranja oscuro */
     color: white;
     padding: 10px;
     border-radius: 10px 10px 0 0;
@@ -360,18 +360,18 @@ footer {
 #chat-form {
     display: flex;
     padding: 10px;
-    border-top: 1px solid #FFCC80;
+    border-top: 1px solid #002F6C;
 }
 
 #chat-form input {
     flex: 1;
     padding: 8px;
-    border: 1px solid #FFCC80;
+    border: 1px solid #002F6C;
     border-radius: 5px;
 }
 
 #chat-form button {
-    background: #FF9800; /* Naranja oscuro */
+    background: #002F6C; /* Naranja oscuro */
     color: white;
     border: none;
     padding: 10px;
@@ -383,7 +383,7 @@ footer {
  /* Estilos para la sección de servicios */
  .services-section {
     padding: 40px 20px;
-    background-color: #fdf3e7; /* Fondo claro */
+    background-color: #e6e8e7; /* Fondo claro */
     text-align: center;
     border-radius: 20px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
@@ -399,7 +399,7 @@ footer {
 
 .section-title {
     font-size: 2.8em;
-    color: #cc5500;
+    color: #002F6C;
     margin-bottom: 20px;
     font-weight: bold;
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
@@ -417,7 +417,7 @@ footer {
 
 .section-features-title {
     font-size: 1.5em;
-    color: #6c757d;
+    color: #000000;
     margin-bottom: 30px;
     font-weight: 600;
 }
@@ -438,7 +438,7 @@ footer {
 }
 
 .service-card h3 {
-    color: #cc5500; /* Color del título en cada tarjeta */
+    color: #002F6C; /* Color del título en cada tarjeta */
     font-size: 1.5em;
     font-weight: bold;
     margin-bottom: 15px;
@@ -450,4 +450,5 @@ footer {
     line-height: 1.6;
     text-align: justify; /* Justificación de texto en cada tarjeta */
 }
+
 
